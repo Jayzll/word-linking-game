@@ -84,7 +84,7 @@ export default function App() {
           </div>
         )}
 
-        {first && (
+        {/* {first && (
           <input
             type="text"
             value={word}
@@ -95,7 +95,7 @@ export default function App() {
             placeholder={`Type word starting with ${first} and ending with ${last}`}
             onKeyDown={(e) => e.key === 'Enter' && onSubmit(e)}
           />
-        )}
+        )} */}
 
         {first && !result && (
           <div className="submit-area">
