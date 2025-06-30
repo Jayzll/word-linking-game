@@ -1,0 +1,207 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  min-height: 100vh;
+  background: white;
+  padding: 1rem;
+  color: rgb(0, 0, 0);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.header p {
+  color: #000000;
+}
+
+.game-area {
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+.letter-boxes, .middle-letters  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.letter-box, .middle-box {
+  width: 4rem;
+  height: 4rem;
+  border: 2px solid;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.middle-letters {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0;
+}
+
+.middle-box {
+  background-color: #787c7f;
+  border-color: #787c7f;
+  color: white;
+
+}
+
+.first {
+  background-color: #6ca965;
+  border-color: #6ca965;
+  color: white;
+}
+
+.last {
+  background-color: #c8b653;
+  border-color: #c8b653;
+  color: white;
+}
+
+.inactive {
+  background-color: #f3f4f6;
+  border-color: #d1d5db;
+  color: #9ca3af;
+}
+
+.timer-display {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.timer {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(6px);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.hidden-input {
+  opacity: 0;
+  position: absolute;
+  left: -9999px;
+}
+
+.submit-area {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.submit-area p {
+  color: #bfdbfe;
+  margin-bottom: 1rem;
+}
+
+.submit-area button {
+  background-color: #22c55e;
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.submit-area button:hover {
+  background-color: #16a34a;
+}
+
+.submit-area button:disabled {
+  background-color: #6b7280;
+}
+
+.result-area {
+  text-align: center;
+  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(6px);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+}
+
+.result-area h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.result-area button {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.result-area button:hover {
+  background-color: #2563eb;
+}
+
+.keyboard {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(6px);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+}
+
+.keyboard-row {
+  display: flex;
+  justify-content: center;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.key-button, .delete-button, .enter-button {
+  height: 2.5rem;
+  background: rgba(85, 85, 85, 0.1);
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 0.5rem;
+  transition: background 0.2s;
+  cursor: pointer;S
+}
+
+.key-button:hover,
+.delete-button:hover,
+.enter-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.key-button:disabled,
+.delete-button:disabled,
+.enter-button:disabled {
+  background: rgba(255, 255, 255, 0.1);
+  cursor: not-allowed;
+}
+
+.delete-button, .enter-button {
+  width: 3rem;
+}
+
+.start-instruction {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: black;
+}
