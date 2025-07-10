@@ -12,25 +12,29 @@ export default function App() {
   const [dictionary, setDictionary] = useState(new Set());
 
   useEffect(() => {
-    fetch('/dictionary.json')
-      .then(res => res.json())
-      .then(data => setDictionary(new Set(data.map(w => w.toUpperCase()))))
-      .catch(() => {
-        const fallbackWords = ['APPLE', 'BANANA', 'SILENT', 'LISTEN', 'SCRABBLE', 'GAME'];
-        setDictionary(new Set(fallbackWords));
-      });
-  }, []);
+      fetch('/dictionary.json')
+        .then(res => res.json())
+        .then(data => setDictionary(new Set(data.map(w => w.toUpperCase()))))
+        .catch(() => {
+          const fallbackWords = ['APPLE', 'BANANA', 'SILENT', 'LISTEN', 'SCRABBLE', 'GAME'];
+          setDictionary(new Set(fallbackWords));
+        });
+    }, []);
 
   useEffect(() => {
     let interval;
     if (timer > 0) {
       interval = setTimeout(() => setTimer(timer - 1), 1000);
     } else if (timer === 0 && first && last && !result) {
-      checkWord();
+      // Only check if user has actually typed something beyond the initial first+last
+      if (word.length > 2) {
+        checkWord();
+      } else {
+        setResult('❌ Time\'s up! You didn\'t enter a word.');
+      }
     }
     return () => clearTimeout(interval);
   }, [timer, first, last, result, word]);
-
 
   const checkWord = () => {
     const upperWord = word.toUpperCase();
@@ -45,8 +49,35 @@ export default function App() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (timer > 0 && !result) {
+    if (timer > 0 && !result && word.length > 2) {
       setTimer(0);
+    }
+  };
+
+  const handleKeyboardInput = (e) => {
+    const letter = e.target.value.slice(-1).toUpperCase();
+    if (letter && ALPHABET.includes(letter)) {
+      if (!first) {
+        const randomLast = ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+        setFirst(letter);
+        setLast(randomLast);
+        setWord(letter + randomLast);
+        setTimer(10);
+        setResult(null);
+      } else if (!result) {
+        const middle = word.slice(1, -1);
+        setWord(first + middle + letter + last);
+      }
+    }
+    e.target.value = '';
+  };
+
+  const handleBackspace = () => {
+    if (first && !result) {
+      const middle = word.slice(1, -1);
+      if (middle.length > 0) {
+        setWord(first + middle.slice(0, -1) + last);
+      }
     }
   };
 
@@ -80,44 +111,61 @@ export default function App() {
 
         {first && (
           <div className="timer-display">
-            <div className="timer">Time: {timer}s</div>
+            <div className={`timer ${timer <= 5 ? 'warning' : ''}`}>
+              Time: {timer}s
+            </div>
           </div>
         )}
 
-        {/* {first && (
-          <input
-            type="text"
-            value={word}
-            onChange={e => setWord(e.target.value)}
-            disabled={!!result}
-            autoFocus
-            className="hidden-input"
-            placeholder={`Type word starting with ${first} and ending with ${last}`}
-            onKeyDown={(e) => e.key === 'Enter' && onSubmit(e)}
-          />
-        )} */}
-
         {first && !result && (
-          <div className="submit-area">
-            <p>
-              {word.length <= 2 ? 'Start typing your word (it will appear above)' : `Current word: ${word}`}
-            </p>
-            <button onClick={onSubmit} disabled={!!result || word.length <= 2}>
-              Submit Word
-            </button>
-          </div>
+          <>
+            <input
+              type="text"
+              className="word-input"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  onSubmit(e);
+                } else if (e.key === 'Backspace') {
+                  e.preventDefault();
+                  handleBackspace();
+                } else if (e.key.length === 1 && ALPHABET.includes(e.key.toUpperCase())) {
+                  e.preventDefault();
+                  const letter = e.key.toUpperCase();
+                  const middle = word.slice(1, -1);
+                  setWord(first + middle + letter + last);
+                }
+              }}
+              placeholder={`Type letters to build your word (${first}...${last})`}
+              autoFocus
+            />
+            <div className="submit-area">
+              <p>
+                {word.length <= 2 ? 'Start typing your word (it will appear above)' : `Current word: ${word}`}
+              </p>
+              <button 
+                className="submit-button"
+                onClick={onSubmit} 
+                disabled={!!result || word.length <= 2}
+              >
+                Submit Word
+              </button>
+            </div>
+          </>
         )}
 
         {result && (
           <div className="result-area">
-            <h2>{result}</h2>
-            <button onClick={() => {
-              setFirst('');
-              setLast('');
-              setWord('');
-              setResult(null);
-              setTimer(0);
-            }}>
+            <h2 className={result.includes('✅') ? 'win' : 'lose'}>{result}</h2>
+            <button 
+              className="play-again-button"
+              onClick={() => {
+                setFirst('');
+                setLast('');
+                setWord('');
+                setResult(null);
+                setTimer(0);
+              }}
+            >
               Play Again?
             </button>
           </div>
@@ -136,7 +184,7 @@ export default function App() {
                       setFirst(letter);
                       setLast(randomLast);
                       setWord(letter + randomLast);
-                      setTimer(10);
+                      setTimer(30);
                       setResult(null);
                     } else if (!result) {
                       const middle = word.slice(1, -1);
@@ -153,12 +201,7 @@ export default function App() {
                 <>
                   <button
                     className="delete-button"
-                    onClick={() => {
-                      if (first && !result) {
-                        const middle = word.slice(1, -1);
-                        setWord(first + middle.slice(0, -1) + last);
-                      }
-                    }}
+                    onClick={handleBackspace}
                     disabled={!first || !!result || word.length <= 2}
                   >
                     ⌫
@@ -177,8 +220,14 @@ export default function App() {
         </div>
 
         {!first && (
-          <div className="start-instruction">
-            <p>Click any letter to start the game!</p>
+          <div style={{
+            textAlign: 'center',
+            marginTop: '20px'
+          }}>
+            <p style={{
+              fontSize: '18px',
+              color: '#666'
+            }}>Click any letter to start the game!</p>
           </div>
         )}
       </div>
