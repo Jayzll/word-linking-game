@@ -1,32 +1,38 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
+:root {
+  --nyt-green: #6ca965;
+  --nyt-yellow: #c8b653;
+  --text-color: #000000;
+  --nyt-gray: 	#787c7f;
 }
-
 .app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
   min-height: 100vh;
-  background: white;
-  padding: 1rem;
-  color: rgb(0, 0, 0);
 }
 
 .header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 30px;
 }
 
 .header h1 {
-  font-size: 2.5rem;
-  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
 }
 
 .header p {
-  color: #000000;
+  color: #666;
+  font-size: 16px;
 }
 
 .game-area {
-  max-width: 768px;
-  margin: 0 auto;
+  background-color: white;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
 .letter-boxes {
@@ -50,59 +56,53 @@ body {
   font-weight: bold;
 }
 
-.middle-letters {
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 0;
-  gap: 10px;
-}
-
-.middle-box {
-  width: 60px;
-  height: 60px;
-  border: 3px solid;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  font-weight: bold;
-  background-color: #787c7f;
-  border-color: #787c7f;
-  color: white;
-
-}
-
 .letter-box.first {
-  background-color: #6ca965;
-  border-color: #6ca965;
+  border-color: #4CAF50;
+  background-color: var(--nyt-green);
   color: white;
 }
 
 .letter-box.last {
-  background-color: #c8b653;
-  border-color: #c8b653;
+  border-color: #FF9800;
+  background-color: var(--nyt-yellow);
   color: white;
 }
 
 .letter-box.inactive {
-  background-color: #f3f4f6;
-  border-color: #d1d5db;
-  color: #9ca3af;
+  border-color: #f0f0f0;
+  background-color: #f0f0f0;
+  color: #999;
+}
+
+.middle-letters {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.middle-box {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #2196F3;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #2196F3;
+  color: white;
 }
 
 .timer-display {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 20px;
 }
 
 .timer {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(6px);
-  border-radius: 0.5rem;
-  padding: 0.75rem 1.5rem;
-  font-size: 1.5rem;
+  font-size: 20px;
   font-weight: bold;
+  color: #333;
 }
 
 .timer.warning {
@@ -121,32 +121,28 @@ body {
 
 .submit-area {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 20px;
 }
 
 .submit-area p {
   font-size: 16px;
-  color: #bfdbfe;
-  margin-bottom: 1rem;
+  color: #666;
+  margin-bottom: 10px;
 }
 
-.submit-area button {
-  background-color: #22c55e;
+.submit-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: var(--nyt-green);
   color: white;
-  font-weight: bold;
-  padding: 0.5rem 1.5rem;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background 0.2s ease;
 }
 
-.submit-area button:hover {
-  background-color: #16a34a;
-}
-
-.submit-area button:disabled {
-  background-color: #6b7280;
+.submit-button:disabled {
+  background-color: var(--nyt-gray);
+  cursor: not-allowed;
 }
 
 .result-area {
@@ -159,7 +155,7 @@ body {
 }
 
 .result-area h2.win {
-  color: #4CAF50;
+  color: var(--nyt-green);
 }
 
 .result-area h2.lose {
@@ -237,7 +233,7 @@ body {
   height: 40px;
   border: none;
   border-radius: 5px;
-  background-color: #4CAF50;
+  background-color: var(--nyt-green);
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -250,7 +246,7 @@ body {
 }
 
 .enter-button:hover:not(:disabled) {
-  background-color: #45a049;
+  background-color: var(--nyt-green);
 }
 
 .start-instruction {
@@ -261,4 +257,307 @@ body {
 .start-instruction p {
   font-size: 18px;
   color: #666;
+}
+
+/* Lobby Styles */
+.lobby-home {
+  text-align: center;
+}
+
+.lobby-options {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 40px 0;
+}
+
+.lobby-button {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 15px;
+  padding: 40px 30px;
+  min-width: 200px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.lobby-button:hover {
+  border-color: var(--nyt-green);
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+  transform: translateY(-2px);
+}
+
+.create-button:hover {
+  border-color: var(--nyt-green);
+  box-shadow: 0 5px 15px rgba(76, 175, 80, 0.2);
+}
+
+.join-button:hover {
+  border-color: #2196F3;
+  box-shadow: 0 5px 15px rgba(33, 150, 243, 0.2);
+}
+
+.button-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.lobby-button h3 {
+  font-size: 24px;
+  margin: 15px 0 10px 0;
+  color: #333;
+}
+
+.lobby-button p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+/* Form Styles */
+.lobby-form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.form-group {
+  margin-bottom: 25px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+  font-size: 16px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #4CAF50;
+}
+
+.form-input.error {
+  border-color: #f44336;
+}
+
+.code-input {
+  text-align: center;
+  font-family: monospace;
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.error-message {
+  color: #f44336;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.primary-button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.primary-button:hover:not(:disabled) {
+  background-color: #45a049;
+}
+
+.primary-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.secondary-button {
+  background-color: transparent;
+  color: #666;
+  border: 2px solid #e0e0e0;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.secondary-button:hover {
+  border-color: #ccc;
+  color: #333;
+}
+
+/* Waiting Room Styles */
+.waiting-room {
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.game-code-display {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+}
+
+.game-code-display h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.game-code {
+  font-family: monospace;
+  font-size: 36px;
+  font-weight: bold;
+  color: #4CAF50;
+  background-color: white;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border: 2px solid #4CAF50;
+  letter-spacing: 3px;
+  margin: 15px 0;
+}
+
+.game-code-display p {
+  color: #666;
+  margin: 10px 0 0 0;
+}
+
+.joined-game {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+}
+
+.joined-game h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.joined-game p {
+  color: #666;
+  margin: 10px 0 0 0;
+  font-size: 18px;
+}
+
+.game-settings {
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+}
+
+.game-settings h3 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+.setting-item span:first-child {
+  font-weight: bold;
+  color: #333;
+}
+
+.setting-item span:last-child {
+  color: #666;
+}
+
+.players-list {
+  margin-bottom: 30px;
+}
+
+.players-list h3 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.players {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.player-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: white;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.player-item:last-child {
+  margin-bottom: 0;
+}
+
+.player-name {
+  font-weight: bold;
+  color: #333;
+}
+
+.host-badge {
+  background-color: #4CAF50;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.waiting-actions {
+  display: flex;  
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+}
+
+.waiting-message {
+  margin: 20px 0;
+}
+
+.waiting-message p {
+  color: #666;
+  font-style: italic;
+  font-size: 16px;
 }
