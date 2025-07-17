@@ -377,7 +377,7 @@
 }
 
 .primary-button {
-  background-color: #4CAF50;
+  background-color: var(--nyt-green);
   color: white;
   border: none;
   padding: 12px 24px;
@@ -389,7 +389,7 @@
 }
 
 .primary-button:hover:not(:disabled) {
-  background-color: #45a049;
+  background-color: var(--nyt-green);
 }
 
 .primary-button:disabled {
@@ -441,7 +441,7 @@
   background-color: white;
   padding: 15px 20px;
   border-radius: 8px;
-  border: 2px solid #4CAF50;
+  border: 2px solid var(--nyt-green);
   letter-spacing: 3px;
   margin: 15px 0;
 }
@@ -537,7 +537,7 @@
 }
 
 .host-badge {
-  background-color: #4CAF50;
+  background-color: var(--nyt-green);
   color: white;
   padding: 4px 8px;
   border-radius: 4px;
