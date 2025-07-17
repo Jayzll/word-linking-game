@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useGlobalWebSocket } from './context/WebSocketProvider';
 import './App.css';
 
 export default function GameLobby() {
@@ -11,6 +12,55 @@ const [formData, setFormData] = useState({
 });
 const [errors, setErrors] = useState({});
 const [isLoading, setIsLoading] = useState(false);
+const [doStart, setDoStart] = useState(false);
+const [doJoin, setDoJoin] = useState(false);
+const ws = useGlobalWebSocket();
+
+    useEffect(() => {
+        if (!ws) return;
+
+        const handleMessage = (event) => {
+            const data = JSON.parse(event.data);
+            console.log('Received via context:', data);
+        };
+
+        ws.addEventListener('message', handleMessage);
+
+        if (doStart && ws.readyState === WebSocket.OPEN) {
+            const message = JSON.stringify({
+                event: 'start_game',
+                payload: {
+                    name: formData.name.trim(),
+                    letters: 'AB'
+                }
+            });
+            console.log('Sending start_game message:', message);
+            ws.send(message);
+            setDoStart(false);
+        } else if (doStart) {
+            console.log('Cannot send start_game message. WebSocket ready state:', ws.readyState);
+        }
+
+        if (doJoin && ws.readyState === WebSocket.OPEN) {
+            const message = JSON.stringify({
+                event: 'join_game',
+                payload: {
+                    name: formData.name.trim(),
+                    join_code: formData.code.trim()
+                }
+            });
+            console.log('Sending join_game message:', message);
+            ws.send(message);
+            setDoJoin(false);
+        } else if (doJoin) {
+            console.log('Cannot send join_game message. WebSocket ready state:', ws.readyState);
+        }
+
+        return () => {
+            ws.removeEventListener('message', handleMessage);
+        };
+    }, [ws, doStart, doJoin, formData.name, formData.code]);
+
 
 // Generate a random game code
 const generateGameCode = () => {
@@ -70,9 +120,11 @@ const handleCreateGame = () => {
         createdAt: new Date().toISOString()
     };
     
+    setDoStart(true);
     setGameData(newGameData);
     setCurrentView('waiting');
     setIsLoading(false);
+    
     
     // This is where you would send data to backend
     console.log('Create Game Data:', newGameData);
@@ -93,9 +145,11 @@ const handleJoinGame = () => {
         joinedAt: new Date().toISOString()
     };
     
+    setDoJoin(true);
     setGameData(joinGameData);
     setCurrentView('waiting');
     setIsLoading(false);
+    
     
     // This is where you would send data to backend
     console.log('Join Game Data:', joinGameData);
@@ -245,7 +299,7 @@ if (currentView === 'join') {
                 id="code"
                 type="text"
                 value={formData.code}
-                onChange={(e) => handleInputChange('code', e.target.value.toUpperCase())}
+                onChange={(e) => handleInputChange('code', e.target.value)}
                 className={`form-input code-input ${errors.code ? 'error' : ''}`}
                 placeholder="Enter 6-character code"
                 maxLength={6}
