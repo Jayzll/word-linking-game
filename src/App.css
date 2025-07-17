@@ -29,23 +29,24 @@ body {
   margin: 0 auto;
 }
 
-.letter-boxes, .middle-letters  {
+.letter-boxes {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
-.letter-box, .middle-box {
-  width: 4rem;
-  height: 4rem;
-  border: 2px solid;
-  border-radius: 0.5rem;
+.letter-box {
+  width: 60px;
+  height: 60px;
+  border: 3px solid;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 24px;
   font-weight: bold;
 }
 
@@ -53,28 +54,38 @@ body {
   display: flex;
   flex-direction: row;
   margin-bottom: 0;
+  gap: 10px;
 }
 
 .middle-box {
+  width: 60px;
+  height: 60px;
+  border: 3px solid;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
   background-color: #787c7f;
   border-color: #787c7f;
   color: white;
 
 }
 
-.first {
+.letter-box.first {
   background-color: #6ca965;
   border-color: #6ca965;
   color: white;
 }
 
-.last {
+.letter-box.last {
   background-color: #c8b653;
   border-color: #c8b653;
   color: white;
 }
 
-.inactive {
+.letter-box.inactive {
   background-color: #f3f4f6;
   border-color: #d1d5db;
   color: #9ca3af;
@@ -94,10 +105,18 @@ body {
   font-weight: bold;
 }
 
-.hidden-input {
-  opacity: 0;
-  position: absolute;
-  left: -9999px;
+.timer.warning {
+  color: #f44336;
+}
+
+.word-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  text-align: center;
 }
 
 .submit-area {
@@ -106,6 +125,7 @@ body {
 }
 
 .submit-area p {
+  font-size: 16px;
   color: #bfdbfe;
   margin-bottom: 1rem;
 }
@@ -131,77 +151,114 @@ body {
 
 .result-area {
   text-align: center;
-  margin-bottom: 2rem;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(6px);
-  border-radius: 0.5rem;
-  padding: 1.5rem;
+  margin-bottom: 20px;
 }
 
 .result-area h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 15px;
 }
 
-.result-area button {
-  background-color: #3b82f6;
+.result-area h2.win {
+  color: #4CAF50;
+}
+
+.result-area h2.lose {
+  color: #f44336;
+}
+
+.play-again-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #2196F3;
   color: white;
-  font-weight: bold;
-  padding: 0.5rem 1.5rem;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: 5px;
   cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.result-area button:hover {
-  background-color: #2563eb;
 }
 
 .keyboard {
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(6px);
-  border-radius: 0.5rem;
-  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
 }
 
 .keyboard-row {
   display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 0.25rem;
-  margin-bottom: 0.5rem;
 }
 
-.key-button, .delete-button, .enter-button {
-  height: 2.5rem;
-  background: rgba(85, 85, 85, 0.1);
-  color: rgb(0, 0, 0);
+.key-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  background-color: #e0e0e0;
+  color: #333;
+  font-size: 16px;
   font-weight: bold;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 0.5rem;
-  transition: background 0.2s;
-  cursor: pointer;S
+  cursor: pointer;
 }
 
-.key-button:hover,
-.delete-button:hover,
-.enter-button:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-.key-button:disabled,
-.delete-button:disabled,
-.enter-button:disabled {
-  background: rgba(255, 255, 255, 0.1);
+.key-button:disabled {
+  background-color: #ccc;
   cursor: not-allowed;
 }
 
-.delete-button, .enter-button {
-  width: 3rem;
+.key-button:hover:not(:disabled) {
+  background-color: #d0d0d0;
+}
+
+.delete-button {
+  width: 60px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff9800;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.delete-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.delete-button:hover:not(:disabled) {
+  background-color: #f57c00;
+}
+
+.enter-button {
+  width: 60px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.enter-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.enter-button:hover:not(:disabled) {
+  background-color: #45a049;
 }
 
 .start-instruction {
   text-align: center;
-  margin-top: 1.5rem;
-  color: black;
+  margin-top: 20px;
+}
+
+.start-instruction p {
+  font-size: 18px;
+  color: #666;
 }
