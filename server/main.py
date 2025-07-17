@@ -85,7 +85,7 @@ async def close_with_error(websocket: WebSocket, reason: str, code: int = 1008):
     await websocket.send_json({"event": "error", "message": reason})
     await websocket.close(code=code)
 
-def is_guess_correct(lobby_id: uuid.UUID, guess: string) -> bool:
+def is_guess_correct(lobby_id: uuid.UUID, guess: str) -> bool:
     letters = lobbies_by_id[lobby_id].letters.lower()
     guess = guess.lower()
     if guess[0] == letters[0] and guess[len(guess)-1] == letters[1]:
@@ -164,8 +164,12 @@ async def websocket_endpoint(websocket: WebSocket):
             try:
                 payload = GameJoinPayload(**message.payload)
                 join_code = payload.join_code
-                print(join_code)
-                print(lobbies_by_code)
+                import logging
+                # import logging at the top if not already imported
+                import logging
+                logging.debug(f"Current lobbies_by_code: {lobbies_by_code}")
+                logger.debug(f"Join code received: {join_code}")
+                logger.debug(f"Lobbies by code: {lobbies_by_code}")
 
                 if join_code not in lobbies_by_code:
                     await close_with_error(websocket, "Game not found.")

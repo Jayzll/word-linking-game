@@ -9,7 +9,7 @@ fi
 source venv/bin/activate
 
 pip install --upgrade pip
-pip install uvicorn gunicorn
+pip install -r requirements.txt
 
 # Run Gunicorn with Uvicorn workers
 exec gunicorn main:app -k uvicorn.workers.UvicornWorker -w 4
